@@ -9,7 +9,7 @@ async function signup() {
         document.getElementById("errorText").style.color = "black";
         document.getElementById("errorText").style.display = "block";
         document.getElementById("errorText").innerHTML = "Sending...";
-        const response = await fetch('http://localhost:3000/api/auth/signup', {
+        const response = await fetch('http://exhibition-economy.vercel.app/api/auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
