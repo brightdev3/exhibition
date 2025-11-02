@@ -25,11 +25,11 @@ router.get("/{*path}", (req, res) => {
         if (fs.existsSync(indexPath_html)) {
             return res.render(indexPath_abs);
         } else {
-            return res.status(404).sendFile(path.join(req.app.locals.baseDir, "files", "404.html"));
+            return res.status(404).render(path.join(req.app.locals.baseDir, "files", "404.html"));
         }
     }
 
-    return res.status(404).sendFile(path.join(req.app.locals.baseDir, "files", "404.html"));
+    return res.status(404).render(path.join(req.app.locals.baseDir, "files", "404.html"));
 });
 
 module.exports = router;

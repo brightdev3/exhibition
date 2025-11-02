@@ -7,7 +7,6 @@ const nodemailer = require("nodemailer");
 
 router.post("/signup", async (req, res) => {
     const { username, email, password, password_repeat} = req.body;
-    console.log(req.body)
     if (username.length < 3) {
         return res.status(400).json({
             success: false,
@@ -83,7 +82,6 @@ router.post("/signup", async (req, res) => {
     try {
         await req.app.locals.transporter.sendMail(mailDetails);
     } catch (err) {
-        console.log(err)
         return res.status(400).json({
             success: false,
             message: "email could not be sent"
@@ -95,7 +93,6 @@ router.post("/signup", async (req, res) => {
             VALUES ($1, $2, $3, $4, $5)`, [token, token_expires, username, password_hash, email]
         );
     } catch (err) {
-        console.log(err)
         return res.status(500).json({
             success: false,
             message: "internal server error"
