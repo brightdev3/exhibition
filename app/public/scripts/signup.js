@@ -9,7 +9,7 @@ async function signup() {
         document.getElementById("errorText").style.color = "black";
         document.getElementById("errorText").style.display = "block";
         document.getElementById("errorText").innerHTML = "Sending...";
-        const response = await fetch('http://exhibition-economy.vercel.app/api/auth/signup', {
+        const response = await fetch('https://exhibition-economy.vercel.app/api/auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,7 +25,7 @@ async function signup() {
             document.getElementById("errorText").innerHTML = "Error: " + responseData.message;
         }
     } catch (error) {
-        document.getElementById("errorText").style.color = "green";
+        document.getElementById("errorText").style.color = "red";
         document.getElementById("errorText").style.display = "block";
         document.getElementById("errorText").innerHTML = "Error: " + "an unexpected error occurred";
     }
