@@ -1,12 +1,15 @@
 const express = require("express");
 const { engine } = require("express-handlebars");
+const pg = require("pg");
+const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const app = express();
 const PORT = 3000;
-const BASE_DIR = path.join(__dirname, "files");
-const NOT_FOUND = path.join(BASE_DIR, "404.html");
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -19,30 +22,32 @@ app.engine("html", engine({
 app.set("view engine", "html");
 app.set("views", path.join(__dirname, "views"));
 
-app.get("/{*path}", (req, res) => {
-    let reqPath = decodeURIComponent(req.path);
-    if (reqPath.length > 1 && reqPath.endsWith("/")) {
-        reqPath = reqPath.slice(0, -1);
-    }
-    let absPath = path.join(__dirname, "views", reqPath);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-    let htmlPath = absPath + ".html";
-    if (fs.existsSync(htmlPath) && fs.statSync(htmlPath).isFile()) {
-        return res.render(absPath);
+const pool = new pg.Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
     }
-
-    if (fs.existsSync(absPath) && fs.statSync(absPath).isDirectory()) {
-        let indexPath_abs = path.join(absPath, "index");
-        let indexPath_html = path.join(absPath, "index.html");
-        if (fs.existsSync(indexPath_html)) {
-            return res.render(indexPath_abs);
-        } else {
-            return res.status(404).sendFile(NOT_FOUND);
-        }
-    }
-
-    return res.status(404).render(NOT_FOUND);
 });
+
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: "brightdev03@gmail.com",
+        pass: process.env.EMAIL_PASSWORD,
+    },
+});
+
+app.locals.pool = pool;
+app.locals.transporter = transporter;
+app.locals.baseDir = __dirname;
+
+const routes = require('./routes');
+app.use('/', routes);
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
