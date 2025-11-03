@@ -51,8 +51,8 @@ router.post("/signup", async (req, res) => {
     let exists_email;
     try {
         exists_email = await req.app.locals.pool.query(
-            "SELECT 1 FROM users WHERE LOWER(username)=$1",
-            [username.toLowerCase()]
+            "SELECT 1 FROM users WHERE LOWER(email)=$1",
+            [email.toLowerCase()]
         );
     } catch (err) {
         return res.status(500).json({
