@@ -25,11 +25,13 @@ router.get("/{*path}", (req, res) => {
         if (fs.existsSync(indexPath_html)) {
             return res.render(indexPath_abs);
         } else {
-            return res.status(404).render(path.join("errors", "404.html"));
+            req.app.set('views', path.join(req.app.locals.baseDir, "files"));
+            return res.status(404).render(path.join("errors", "404"));
         }
     }
 
-    return res.status(404).render(path.join("errors", "404.html"));
+    req.app.set('views', path.join(req.app.locals.baseDir, "files"));
+    return res.status(404).render(path.join("errors", "404"));
 });
 
 module.exports = router;
