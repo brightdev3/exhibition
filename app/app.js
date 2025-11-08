@@ -46,8 +46,16 @@ app.locals.pool = pool;
 app.locals.transporter = transporter;
 app.locals.baseDir = __dirname;
 
-const routes = require('./routes');
-app.use('/', routes);
+const routes = require("./routes");
+app.use("/", routes);
+app.use((req, res, next) => {
+    let user = false;
+    if (req.signedCookies.verified) {
+        user = req.signedCookies.username;
+    }
+    req.app.set("views", path.join(__dirname, "files"));
+    return res.status(404).render("errors/404", {"user": user});
+});
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

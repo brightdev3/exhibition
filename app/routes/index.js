@@ -1,13 +1,21 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 const fs = require("fs");
 const path = require("path");
 
-router.use('/api/auth', require('./api/auth'));
-router.use('/api/inflatio', require('./api/inflatio'));
+router.use("/api/auth", require("./api/auth"));
+router.use("/api/inflatio", require("./api/inflatio"));
 
-router.get("/{*path}", (req, res) => {
+const cookieParser = require("cookie-parser");
+router.use(cookieParser(process.env.COOKIE_SECRET));
+
+router.get("/{*path}", (req, res, next) => {
+    let user = false;
+    if (req.signedCookies.verified) {
+        user = req.signedCookies.username;
+    }
+
     let reqPath = decodeURIComponent(req.path);
     if (reqPath.length > 1 && reqPath.endsWith("/")) {
         reqPath = reqPath.slice(0, -1);
@@ -16,22 +24,17 @@ router.get("/{*path}", (req, res) => {
 
     let htmlPath = absPath + ".html";
     if (fs.existsSync(htmlPath) && fs.statSync(htmlPath).isFile()) {
-        return res.render(absPath);
+        return res.render(absPath, {"user": user});
     }
 
     if (fs.existsSync(absPath) && fs.statSync(absPath).isDirectory()) {
         let indexPath_abs = path.join(absPath, "index");
         let indexPath_html = path.join(absPath, "index.html");
         if (fs.existsSync(indexPath_html)) {
-            return res.render(indexPath_abs);
-        } else {
-            req.app.set('views', path.join(req.app.locals.baseDir, "files"));
-            return res.status(404).render(path.join("errors", "404"));
+            return res.render(indexPath_abs, {"user": user});
         }
     }
-
-    req.app.set('views', path.join(req.app.locals.baseDir, "files"));
-    return res.status(404).render(path.join("errors", "404"));
+    next();
 });
 
 module.exports = router;

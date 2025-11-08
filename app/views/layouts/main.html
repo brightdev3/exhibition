@@ -7,15 +7,22 @@
     <link rel="shortcut icon" href="/assets/favicon.png" type="image/x-icon">
 </head>
 <body>
-    <nav>
-        <h1>Exhibition</h1>
-        <p>Navigation:</p>
-        <a href="/">[ Home ]</a>
-        <a href="/signup">[ Sign Up ]</a>
-        <a href="/about">[ About ]</a>
+    <h1>Exhibition</h1>
+    <nav class="navbar navbar-expand-sm bg-light">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+            {{#if user}}
+            <li class="nav-item"><a href="/me" class="nav-link">{{user}}</a></li>
+            {{else}}
+            <li class="nav-item"><a href="/signin" class="nav-link">Sign in</a></li>
+            <li class="nav-item"><a href="/signup" class="nav-link">Sign up</a></li>
+            {{/if}}
+        </ul>
     </nav>
-
-    <div class="main" style="border: 2px solid black; padding: 30px 30px 20px 30px; margin: 20px">
+    <div class="main">
         {{{body}}}
     </div>
     <footer>

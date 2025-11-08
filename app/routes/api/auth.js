@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+const cookieParser = require("cookie-parser");
 const bcrypt = require("bcrypt");
+
+router.use(cookieParser(process.env.COOKIE_SECRET));
 
 router.post("/signup", async (req, res) => {
     try {
@@ -47,10 +50,9 @@ router.post("/signup", async (req, res) => {
                 message: "username is already taken"
             });
         }
-        const password_hash = await bcrypt.hash(password, 10);
         await req.app.locals.pool.query(
-            `INSERT INTO users (username, password_hash, display_name, email)
-            VALUES ($1, $2, $3, $4)`, [username, password_hash, name, email]
+            `INSERT INTO users (username, password, name, email)
+            VALUES ($1, $2, $3, $4)`, [username, password, name, email]
         );
         return res.status(201).json({
             success: true,
@@ -62,6 +64,48 @@ router.post("/signup", async (req, res) => {
             message: "internal server error"
         });
     }
+});
+
+router.post("/signin", async (req, res) => {
+    const { username, password } = req.body;
+    if (!username) {
+        return res.status(401).json({
+            success: false,
+            message: "username is invalid"
+        });
+    }
+    const accounts = await req.app.locals.pool.query(
+        "SELECT password FROM users WHERE LOWER(username)=$1",
+        [username.toLowerCase()]
+    );
+    if (accounts.rowCount == 0) {
+        return res.status(401).json({
+            success: false,
+            message: "username is invalid"
+        });
+    }
+    if (password == accounts.rows[0].password) {
+        res.cookie("username", username, {signed: true});
+        res.cookie("verified", true, {signed: true});
+        return res.status(200).json({
+            success: true,
+            message: "signed in"
+        });
+    } else {
+        return res.status(401).json({
+            success: false,
+            message: "password is incorrect"
+        });
+    }
+});
+
+router.post("/signout", async (req, res) => {
+    res.clearCookie("username", { signed: true });
+    res.clearCookie("verified", { signed: true });
+    return res.status(200).json({
+        success: true,
+        message: "signed out"
+    });
 });
 
 module.exports = router;

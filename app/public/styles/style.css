@@ -1,3 +1,24 @@
 body {
     padding: 15px;
 }
+
+.navbar {
+    border-radius: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.main {
+    padding: 30px 30px 20px 30px;
+    margin: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.links-right {
+    margin-left: auto;
+}
+
+.nav-link:hover {
+    color: #0d6efd !important;
+}
