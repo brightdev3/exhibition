@@ -1,0 +1,47 @@
+<p>I've paused progress on this section of the website as I am now focusing on adding the more basic features.</p>
+<div id="cards" style="display: flex; flex-wrap: wrap;"></div>
+<form id="newgameForm">
+    <input type="checkbox" id="open" name="open" class="form-check-input">
+    <label for="open">Open</label><br>
+    <br>
+    <label for="password">Password (if not open)</label><br>
+    <input type="password" id="password" name="password" class="form-control"><br>
+    <br>
+    <button type="submit" class="btn btn-primary">New game</button>
+</form>
+<br>
+<div id="errorText" class="alert alert-warning" role="alert" style="display: none;"></div>
+<script src="/scripts/newgame.js"></script>
+<script src="/scripts/joingame.js"></script>
+<script>
+async function loadgames() {
+    try {
+        const response = await fetch("/api/games/view", {
+            method: "GET"
+        });
+        const responseData = await response.json();
+        if (responseData.success) {
+            const games = responseData.data;
+            for (let i = 0; i < games.length; i++) {
+                document.getElementById("cards").innerHTML += `
+                    <div class="card card-item row">
+                        <p>Host: ${games[i].host}</p>
+                        <p>Open: ${games[i].open}</p>
+                        <button onclick="joingame('${games[i].token}');" class="btn btn-primary">Join</button>
+                    </div>
+                `;
+            }
+            // document.getElementById("games").innerHTML = JSON.stringify(responseData.data);
+        } else {
+            document.getElementById("errorText").style.color = "red";
+            document.getElementById("errorText").innerHTML = "Error: " + responseData.message;
+        }
+    } catch (error) {
+        document.getElementById("errorText").style.color = "red";
+        document.getElementById("errorText").style.display = "block";
+        document.getElementById("errorText").innerHTML = "Error: " + "an unexpected error occurred";
+    }
+}
+
+loadgames();
+</script>

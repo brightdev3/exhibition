@@ -22,3 +22,9 @@ body {
 .nav-link:hover {
     color: #0d6efd !important;
 }
+
+.card-item {
+    width: 300px;
+    padding: 10px;
+    margin: 10px
+}

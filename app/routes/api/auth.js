@@ -67,6 +67,7 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/signin", async (req, res) => {
+    const kv = req.app.locals.kv;
     const { username, password } = req.body;
     if (!username) {
         return res.status(401).json({

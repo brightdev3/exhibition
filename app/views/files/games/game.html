@@ -1,0 +1,12 @@
+<p>You have joined! Yahoo!</p>
+<p>Other people in this game</p>
+{{#each users}}
+    <li>{{this.users_username}}</li>
+{{/each}}
+<br>
+<p>Leaving and deleting games does not work yet.</p>
+{{#if host}}
+<button class="btn btn-danger">Delete and leave game</button>
+{{else}}
+<button class="btn btn-danger">Leave game</button>
+{{/if}}

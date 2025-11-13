@@ -6,6 +6,7 @@ const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
 const dotenv = require("dotenv");
+const { createClient } = require("@vercel/kv");
 dotenv.config();
 
 const app = express();
@@ -32,6 +33,11 @@ const pool = new pg.Pool({
     }
 });
 
+const kv = createClient({
+    url: process.env.KV_REST_API_URL,
+    token: process.env.KV_REST_API_TOKEN,
+});
+
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -43,19 +49,12 @@ const transporter = nodemailer.createTransport({
 });
 
 app.locals.pool = pool;
+app.locals.kv = kv;
 app.locals.transporter = transporter;
 app.locals.baseDir = __dirname;
 
 const routes = require("./routes");
 app.use("/", routes);
-app.use((req, res, next) => {
-    let user = false;
-    if (req.signedCookies.verified) {
-        user = req.signedCookies.username;
-    }
-    req.app.set("views", path.join(__dirname, "files"));
-    return res.status(404).render("errors/404", {"user": user});
-});
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

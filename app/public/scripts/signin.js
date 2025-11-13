@@ -4,9 +4,8 @@ async function signin() {
         "password": document.getElementById("password").value,
     };
     try {
-        document.getElementById("errorText").style.color = "black";
-        document.getElementById("errorText").style.display = "block";
-        document.getElementById("errorText").innerHTML = "Sending...";
+        document.getElementById("alertText").style.display = "block";
+        document.getElementById("alertText").innerHTML = "Sending...";
         const response = await fetch("/api/auth/signin", {
             method: "POST",
             headers: {
@@ -16,19 +15,21 @@ async function signin() {
         });
         const responseData = await response.json();
         if (responseData.success) {
-            document.getElementById("errorText").style.color = "green";
-            document.getElementById("errorText").innerHTML = "Success: " + responseData.message;
+            document.getElementById("alertText").classList.remove("alert-info");
+            document.getElementById("alertText").classList.add("alert-success");
+            document.getElementById("alertText").innerHTML = "Success: " + responseData.message;
             setTimeout(() => {
                 window.location.href = "/"; 
             }, 500);
         } else {
-            document.getElementById("errorText").style.color = "red";
-            document.getElementById("errorText").innerHTML = "Error: " + responseData.message;
+            document.getElementById("alertText").classList.remove("alert-info");
+            document.getElementById("alertText").classList.add("alert-error");
+            document.getElementById("alertText").innerHTML = "Error: " + responseData.message;
         }
     } catch (error) {
-        document.getElementById("errorText").style.color = "red";
-        document.getElementById("errorText").style.display = "block";
-        document.getElementById("errorText").innerHTML = "Error: " + "an unexpected error occurred";
+        document.getElementById("alertText").classList.remove("alert-info");
+            document.getElementById("alertText").classList.add("alert-error");
+        document.getElementById("alertText").innerHTML = "Error: " + "an unexpected error occurred";
     }
 }
 

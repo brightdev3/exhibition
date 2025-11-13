@@ -1,0 +1,28 @@
+<h3>{{username}}</h3>
+<br>
+<p><b>Assets</b></p>
+<div id="cards" style="display: flex; flex-wrap: wrap;">
+    {{#each assets}}
+    <div class="card" style="width: 150px; padding: 10px; margin: 10px;">
+        <img src="/assets/favicon.png" class="card-img-top" alt="currency">
+        <div class="card-body">
+            <h5 class="card-title">{{lookup this 0}}</h5>
+            <p class="card-text">{{lookup this 1}}</p>
+        </div>
+    </div>
+    {{/each}}
+</div>
+<br>
+<p><b>Details</b></p>
+<p>Email: {{user_details.email}}</p>
+<p>Name: {{user_details.name}}</p>
+<p>Joined: {{user_details.created_at}}</p>
+<p>About me: {{user_details.about_me}}</p>
+<br>
+{{#if isOwner}}
+<button onclick="signout()" class="btn btn-primary">Sign out</button>
+<br>
+<br>
+{{/if}}
+<div id="errorText" class="alert alert-warning" role="alert" style="display: none;"></div>
+<script src="/scripts/signout.js"></script>
