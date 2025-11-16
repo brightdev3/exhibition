@@ -1,5 +1,13 @@
 <p>I've paused progress on this section of the website as I am now focusing on adding the more basic features.</p>
-<div id="cards" style="display: flex; flex-wrap: wrap;"></div>
+<div id="cards" style="display: flex; flex-wrap: wrap;">
+    {{#each games}}
+        <div class="card card-item row">
+            <p>Host: {{this.host}}</p>
+            <p>Open: {{this.open}}</p>
+            <button onclick="joingame('{{this.token}}');" class="btn btn-primary">Join</button>
+        </div>
+    {{/each}}
+</div>
 <form id="newgameForm">
     <input type="checkbox" id="open" name="open" class="form-check-input">
     <label for="open">Open</label><br>
@@ -10,9 +18,10 @@
     <button type="submit" class="btn btn-primary">New game</button>
 </form>
 <br>
-<div id="errorText" class="alert alert-warning" role="alert" style="display: none;"></div>
+<div id="alertText" class="alert" role="alert" style="display: none;"></div>
 <script src="/scripts/newgame.js"></script>
 <script src="/scripts/joingame.js"></script>
+<script src="/scripts/utils.js"></script>
 <script>
 async function loadgames() {
     try {
@@ -31,17 +40,12 @@ async function loadgames() {
                     </div>
                 `;
             }
-            // document.getElementById("games").innerHTML = JSON.stringify(responseData.data);
         } else {
-            document.getElementById("errorText").style.color = "red";
-            document.getElementById("errorText").innerHTML = "Error: " + responseData.message;
+            alertText("Error: " + responseData.message);
         }
     } catch (error) {
-        document.getElementById("errorText").style.color = "red";
-        document.getElementById("errorText").style.display = "block";
-        document.getElementById("errorText").innerHTML = "Error: " + "an unexpected error occurred";
+        alertText("Error: an unexpected error occurred");
     }
 }
-
-loadgames();
+// loadgames();
 </script>

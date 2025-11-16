@@ -64,7 +64,7 @@ router.post("/join", async (req, res) => {
         if (users_games.rows.length == 0) {
             await req.app.locals.pool.query(
                 `INSERT INTO users_games (users_username, games_token, data)
-                VALUES ($1, $2, $3)`, [user, token, {}]
+                VALUES ($1, $2, $3)`, [req.user, token, {}]
             );
         }
         return res.status(200).json({
@@ -90,7 +90,7 @@ router.post("/leave", async (req, res) => {
     try {
         const { token, password } = req.body;
         const games = await req.app.locals.pool.query(
-            `SELECT password, open FROM games WHERE token = $1`,
+            `SELECT host FROM games WHERE token = $1`,
             [token]
         );
         if (!games.rows[0].open && password != games.rows[0].password) {
@@ -101,12 +101,12 @@ router.post("/leave", async (req, res) => {
         }
         const users_games = await req.app.locals.pool.query(
             `SELECT 1 FROM users_games WHERE users_username = $1 AND games_token = $2`,
-            [user, token]
+            [req.user, token]
         );
         if (users_games.rows.length == 0) {
             await req.app.locals.pool.query(
                 `INSERT INTO users_games (users_username, games_token, data)
-                VALUES ($1, $2, $3)`, [user, token, {}]
+                VALUES ($1, $2, $3)`, [req.user, token, {}]
             );
         }
         return res.status(200).json({
@@ -132,7 +132,6 @@ router.get("/view", async (req, res) => {
             data: games.rows
         });
     } catch (err) {
-        console.log(err)
         return res.status(500).json({
             success: false,
             message: "internal server error",

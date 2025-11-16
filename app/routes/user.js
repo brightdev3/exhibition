@@ -20,7 +20,15 @@ router.get("/{:username}", async(req, res, next) => {
         }
         userQuery = userQuery.rows[0];
         const assets = Object.entries(userQuery.assets);
-        return res.render("files/user", {"user": req.user, "username": username, "isOwner": isOwner, "user_details": userQuery, "assets": assets});
+        req.dynamic = {};
+        req.dynamic.data = {
+            "username": username,
+            "isOwner": isOwner,
+            "user_details": userQuery,
+            "assets": assets
+        }
+        req.dynamic.path = "user";
+        return next();
     } catch (err) {
         return res.render("files/errors/500");
     }
