@@ -26,6 +26,7 @@
   "dependencies": {
     "@vercel/kv": "^3.0.0",
     "bcrypt": "^6.0.0",
+    "bootstrap": "^5.3.8",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
