@@ -1,0 +1,20 @@
+<h1>New lesson</h1>
+<br>
+<div class="mb-3">
+    <label for="lessonTitle" class="form-label">Title</label>
+    <input type="text" class="form-control" id="lessonTitle" name="title" required>
+</div>
+<div class="mb-3">
+    <label for="lessonIndex" class="form-label">Index</label>
+    <input type="text" class="form-control" id="lessonIndex" name="index" required>
+</div>
+<div class="mb-3">
+    <label for="lessonContent" class="form-label">Content</label>
+    <textarea class="form-control" id="lessonContent" name="content" rows="10" required></textarea>
+</div>
+{{#if admin}}
+<button onclick="newlesson();" class="btn btn-primary">Create Lesson</button>
+<br><br>
+<div id="alertText" class="alert" role="alert" style="display: none;"></div>
+<script src="/scripts/learn/new.js"></script>
+{{/if}}

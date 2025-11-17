@@ -15,13 +15,32 @@ router.use((req, res, next) => {
     return next();
 });
 
+router.use((req, res, next) => {
+    if (!req.dynamic) req.dynamic = {};
+    if (req.user.toLowerCase() == "brightdev3" || req.user.toLowerCase() == "masonmallow") {
+        req.dynamic.data = {
+            ...req.dynamic.data,
+            admin: true
+        };
+    } else {
+        req.dynamic.data = {
+            ...req.dynamic.data,
+            admin: false
+        };
+    }
+    return next();
+});
+
 router.use("/api/auth", require("./api/auth"));
 router.use("/api/games", require("./api/games"));
+router.use("/api/learn/lesson", require("./api/learn/lesson"));
+router.use("/api/learn/new", require("./api/learn/new"));
 router.use("/game", require("./game"));
 router.use("/games", require("./games"));
 router.use("/user", require("./user"));
+router.use("/learn", require("./learn"));
 
-router.get(/^\/(?:files|layouts)/, (req, res) => {
+router.get(/^\/(?:files|layouts|partials)/, (req, res) => {
     return res.status(403).render("files/errors/403", {user: req.user});
 });
 
@@ -30,7 +49,9 @@ router.get("/{*path}", (req, res, next) => {
         if (req.dynamic.err) {
             return res.render("files/errors/" + req.dynamic.err, {user: req.user, ...req.dynamic.data});
         }
-        return res.render(req.dynamic.path, {user: req.user, ...req.dynamic.data});
+        if (req.dynamic.path) {
+            return res.render(req.dynamic.path, {user: req.user, ...req.dynamic.data});
+        }
     }
 
     let reqPath = decodeURIComponent(req.path);
@@ -41,14 +62,22 @@ router.get("/{*path}", (req, res, next) => {
 
     let htmlPath = absPath + ".html";
     if (fs.existsSync(htmlPath) && fs.statSync(htmlPath).isFile()) {
-        return res.render(absPath, {user: req.user});
+        if (req.dynamic) {
+                return res.render(absPath, {user: req.user, ...req.dynamic.data});
+            } else {
+                return res.render(absPath, {user: req.user});
+            }
     }
 
     if (fs.existsSync(absPath) && fs.statSync(absPath).isDirectory()) {
         let indexPath_abs = path.join(absPath, "index");
         let indexPath_html = path.join(absPath, "index.html");
         if (fs.existsSync(indexPath_html)) {
-            return res.render(indexPath_abs, {user: req.user});
+            if (req.dynamic) {
+                return res.render(indexPath_abs, {user: req.user, ...req.dynamic.data});
+            } else {
+                return res.render(indexPath_abs, {user: req.user});
+            }
         }
     }
     next();

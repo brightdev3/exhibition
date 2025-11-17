@@ -7,7 +7,10 @@ const path = require("path")
 const cookieParser = require("cookie-parser");
 router.use(cookieParser(process.env.COOKIE_SECRET));
 
-router.get("/{:username}", async(req, res, next) => {
+router.use("/{:username}", async(req, res, next) => {
+    if (req.method != "GET") {
+        return next();
+    }
     try {
         const username = req.params.username;
         const isOwner = req.user == username;
@@ -20,8 +23,9 @@ router.get("/{:username}", async(req, res, next) => {
         }
         userQuery = userQuery.rows[0];
         const assets = Object.entries(userQuery.assets);
-        req.dynamic = {};
+        if (!req.dynamic) req.dynamic = {};
         req.dynamic.data = {
+            ...req.dynamic.data,
             "username": username,
             "isOwner": isOwner,
             "user_details": userQuery,
@@ -30,7 +34,7 @@ router.get("/{:username}", async(req, res, next) => {
         req.dynamic.path = "user";
         return next();
     } catch (err) {
-        return res.render("files/errors/500");
+        return res.status(500).render("files/errors/500");
     }
 });
 

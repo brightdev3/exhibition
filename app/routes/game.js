@@ -24,8 +24,9 @@ router.get("/:token", async (req, res, next) => {
         `SELECT host FROM games WHERE token = $1`,
         [token]
     );
-    req.dynamic = {};
+    if (!req.dynamic) req.dynamic = {};
     req.dynamic.data = {
+        ...req.dynamic.data,
         host: games_host.rows[0].host == req.user,
         users: users.rows
     };

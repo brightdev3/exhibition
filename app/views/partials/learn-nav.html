@@ -1,0 +1,12 @@
+<ul class="nav flex-column">
+    <h4 class="mb-4">Lessons</h4>
+    {{#each lessons}}
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/learn/lesson/{{this.code}}">{{this.title}}</a>
+        </li>
+    {{/each}}
+    <br>
+    {{#if admin}}
+    <button class="btn btn-primary" onclick="window.location.href='/learn/lessons/new'">New</button>
+    {{/if}}
+</ul>

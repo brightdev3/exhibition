@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="/learn" class="nav-link">Learn</a></li>
+            <li class="nav-item"><a href="/games" class="nav-link">Games</a></li>
+            <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+            {{#if user}}
+            <div class="btn-group">
+                    <a class="nav-link" href="/user/{{user}}" role="button">
+                        {{user}}
+                    </a>
+                    <button type="button" class="btn btn-link dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"></button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/user/settings">Settings</a></li>
+                    </ul>
+            </div>
+            {{else}}
+            <li class="nav-item"><a href="/signin" class="nav-link">Sign in</a></li>
+            <li class="nav-item"><a href="/signup" class="nav-link">Sign up</a></li>
+            {{/if}}
+        </ul>
+    </div>
+</nav>

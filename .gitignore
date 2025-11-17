@@ -1,3 +1,4 @@
 app/.env
 app/node_modules
 .vercel
+.vscode

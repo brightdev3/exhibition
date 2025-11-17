@@ -1,0 +1,33 @@
+<div id="lesson">
+    <h1 id="lessonTitle">{{lesson.title}}</h1>
+    <br>
+    <div id="lessonContent">{{{lesson.content}}}</div>
+    <br>
+    {{#if admin}}
+    <br>
+    <button class="btn btn-primary" onclick="startEdit();">Edit</button>
+    {{/if}}
+</div>
+<p id="lessonIndex" style="display:none;">{{lesson.index}}</p>
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete lesson</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to delete this lesson? This action cannot be undone.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteLesson();">Delete lesson</button>
+        </div>
+        </div>
+    </div>
+</div>
+<br>
+{{#if admin}}
+<div id="alertText" class="alert" role="alert" style="display: none;"></div>
+<script src="/scripts/learn/lesson.js"></script>
+{{/if}}

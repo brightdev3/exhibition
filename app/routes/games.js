@@ -12,8 +12,9 @@ router.get("/", async (req, res, next) => {
         const games = await req.app.locals.pool.query(
             `SELECT token, host, open FROM games`
         );
-        req.dynamic = {};
+        if (!req.dynamic) req.dynamic = {};
         req.dynamic.data = {
+            ...req.dynamic.data,
             games: games.rows
         };
         req.dynamic.path = "games";

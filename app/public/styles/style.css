@@ -12,7 +12,14 @@ body {
     padding: 30px 30px 20px 30px;
     margin: 20px;
     border-radius: 15px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    overflow-wrap: break-word;
+}
+
+@media screen and (max-width: 576px) {
+    .main {
+        padding: 20px 15px 10px 15px;
+        margin: 15px 10px 15px 10px;
+    }
 }
 
 .links-right {
@@ -27,4 +34,16 @@ body {
     width: 300px;
     padding: 10px;
     margin: 10px
+}
+
+.learn-nav {
+    border-right: 1px solid #ddd;
+    width: 225px;
+    overflow-x: auto;
+}
+
+.learn-content {
+    padding: 15px 30px 15px 30px;
+    word-wrap: break-word;
+    overflow-x: auto;
 }
