@@ -16,15 +16,19 @@ router.use((req, res, next) => {
 });
 
 router.use((req, res, next) => {
-    if (!req.dynamic) req.dynamic = {};
-    if (req.user.toLowerCase() == "brightdev3" || req.user.toLowerCase() == "masonmallow") {
+    req.dynamic = {};
+    if (!req.user) {
         req.dynamic.data = {
-            ...req.dynamic.data,
+            admin: false
+        };
+        return next();
+    }
+    if (process.env.ADMINS.split(",").includes(req.user.toLowerCase())) {
+        req.dynamic.data = {
             admin: true
         };
     } else {
         req.dynamic.data = {
-            ...req.dynamic.data,
             admin: false
         };
     }

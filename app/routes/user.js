@@ -23,7 +23,7 @@ router.use("/{:username}", async(req, res, next) => {
         }
         userQuery = userQuery.rows[0];
         const assets = Object.entries(userQuery.assets);
-        if (!req.dynamic) req.dynamic = {};
+        
         req.dynamic.data = {
             ...req.dynamic.data,
             "username": username,

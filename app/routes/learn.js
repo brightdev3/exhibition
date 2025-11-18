@@ -15,7 +15,7 @@ router.use(async(req, res, next) => {
         `SELECT * FROM lessons ORDER BY index ASC`
     );
     lessons = lessons.rows;
-    if (!req.dynamic) req.dynamic = {};
+    
     req.dynamic.data = {
         ...req.dynamic.data,
         "learnLayout": true,
@@ -39,7 +39,7 @@ router.use("/lesson/{:code}", async(req, res, next) => {
         return res.status(404).render("files/errors/404", {"user": req.user});
     }
     lesson = lesson.rows[0];
-    if (!req.dynamic) req.dynamic = {};
+    
     req.dynamic.data = {
         ...req.dynamic.data,
         "learnLayout": true,
