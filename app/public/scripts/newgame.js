@@ -1,14 +1,14 @@
 async function newgame() {
     let data = {
-        "open": document.getElementById("open").checked,
-        "password": document.getElementById("password").value,
+        "open": document.getElementById("newGameOpen").checked,
+        "password": document.getElementById("newGamePassword").value,
     };
     await request("/api/games/new", data, (responseData) => {
-        joingame(responseData.token);
+        document.getElementById("joinPassword").value = data.password;
+        join(responseData.token);
     });
 };
 
-document.getElementById("newgameForm").addEventListener("submit", async (event) => {
-    event.preventDefault();
-    await newgame();
-});
+document.getElementById("newGameOpen").addEventListener("input", (event) => {
+    document.getElementById("newGamePassword").disabled = event.target.checked;
+})

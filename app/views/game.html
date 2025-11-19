@@ -4,9 +4,13 @@
     <li>{{this.users_username}}</li>
 {{/each}}
 <br>
-<p>Leaving and deleting games does not work yet.</p>
 {{#if host}}
-<button class="btn btn-danger">Delete and leave game</button>
+<button class="btn btn-danger" onclick="leave()">Delete and leave game</button>
 {{else}}
-<button class="btn btn-danger">Leave game</button>
+<button class="btn btn-danger" onclick="leave()">Leave game</button>
 {{/if}}
+<p id="gameToken" style="display:none;">{{token}}</p>
+<br>
+<br>
+<div id="alertText" class="alert" role="alert" style="display: none;"></div>
+<script src="/scripts/game.js"></script>

@@ -87,7 +87,7 @@ router.post("/signin", async (req, res) => {
         });
     }
     const accounts = await req.app.locals.pool.query(
-        "SELECT password FROM users WHERE LOWER(username)=$1",
+        "SELECT username, password FROM users WHERE LOWER(username)=$1",
         [username.toLowerCase()]
     );
     if (accounts.rowCount == 0) {
@@ -97,7 +97,7 @@ router.post("/signin", async (req, res) => {
         });
     }
     if (password == accounts.rows[0].password) {
-        res.cookie("username", username, {signed: true});
+        res.cookie("username", accounts.rows[0].username, {signed: true});
         res.cookie("verified", true, {signed: true});
         return res.status(200).json({
             success: true,

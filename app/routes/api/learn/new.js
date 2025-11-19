@@ -7,7 +7,7 @@ const cookieParser = require("cookie-parser");
 router.use(cookieParser(process.env.COOKIE_SECRET));
 
 router.post("/", async (req, res) => {
-    if (req.user != "brightdev3") {
+    if (!req.dynamic.data.admin) {
         return res.status(403).json({
             success: false,
             message: "forbidden"

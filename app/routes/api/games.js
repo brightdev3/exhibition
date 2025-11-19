@@ -88,30 +88,39 @@ router.post("/leave", async (req, res) => {
         });
     }
     try {
-        const { token, password } = req.body;
+        const { token } = req.body;
         const games = await req.app.locals.pool.query(
             `SELECT host FROM games WHERE token = $1`,
             [token]
         );
-        if (!games.rows[0].open && password != games.rows[0].password) {
-            return res.status(401).json({
+        if (games.rows.length == 0) {
+            return res.status(404).json({
                 success: false,
-                message: "unauthorized",
+                message: "game not found",
             });
         }
-        const users_games = await req.app.locals.pool.query(
-            `SELECT 1 FROM users_games WHERE users_username = $1 AND games_token = $2`,
-            [req.user, token]
-        );
-        if (users_games.rows.length == 0) {
+        let isHost = false;
+        if (games.rows[0].host == req.user) {
+            isHost = true;
+        }
+        if (isHost) {
             await req.app.locals.pool.query(
-                `INSERT INTO users_games (users_username, games_token, data)
-                VALUES ($1, $2, $3)`, [req.user, token, {}]
+                `DELETE FROM users_games WHERE games_token = $1`,
+                [token]
+            );
+            await req.app.locals.pool.query(
+                `DELETE FROM games WHERE token = $1`,
+                [token]
+            );
+        } else {
+            const users_games = await req.app.locals.pool.query(
+                `DELETE FROM users_games WHERE users_username = $1 AND games_token = $2`,
+                [req.user, token]
             );
         }
         return res.status(200).json({
             success: true,
-            message: "joined game"
+            message: isHost ? "deleted game" : "left game"
         });
     } catch (err) {
         console.log(err)

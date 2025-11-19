@@ -1,6 +1,5 @@
-let lessonTitle = document.getElementById("lessonTitle").innerHTML;
-let lessonContent = document.getElementById("lessonContent").innerHTML;
-let lessonIndex = document.getElementById("lessonIndex").innerHTML;
+let lessonTitle = document.getElementById("lessonTitle").innerText;
+let lessonIndex = document.getElementById("lessonIndex").innerText;
 let lessonCode = window.location.pathname.split("/").pop();
 
 let editTitle = "";
@@ -9,7 +8,30 @@ let editIndex = 0;
 let editMode = false;
 
 function render() {
-    document.getElementById("lessonContent").innerHTML = document.getElementById("lessonContent").innerHTML.replaceAll("\n", "<br>");
+    let content = "";
+    if (editMode) {
+        content = editContent;
+    } else {
+        content = lessonContent;
+    }
+    content = content.split("\n");
+    let output = "";
+    let inHTML = false;
+    for (let i = 0; i < content.length; i++) {
+        if (content[i] == "<html>") {
+            inHTML = true;
+            continue;
+        }
+        if (content[i] == "</html>") {
+            inHTML = false;
+            continue;
+        }
+        output += content[i];
+        if (!inHTML) {
+            output += "<br>";
+        }
+    }
+    document.getElementById("lessonContent").innerHTML = output;
 }
 
 function startEdit() {
@@ -21,7 +43,7 @@ function startEdit() {
         content = editContent;
         index = editIndex;
     }
-    editMode = true;
+    
     document.getElementById("lesson").innerHTML = `
         <label for="lessonTitle">Title:</label>
         <input type="text" id="lessonTitle" class="form-control" value="${title}">
@@ -30,7 +52,7 @@ function startEdit() {
         <input type="text" id="lessonIndex" class="form-control" value="${index}">
         <br>
         <label for="lessonContent">Content:</label>
-        <textarea id="lessonContent" class="form-control" rows="10">${content}</textarea>
+        <textarea id="lessonContent" class="form-control" rows="10"></textarea>
         <br>
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
             Delete lesson
@@ -41,6 +63,8 @@ function startEdit() {
         <button class="btn btn-primary" onclick="previewEdit();">Preview</button>
         <button class="btn btn-secondary" onclick="endEdit();">Cancel</button>
     `;
+    document.getElementById("lessonContent").value = content;
+    editMode = true;
 }
 
 function endEdit() {
@@ -62,7 +86,7 @@ function previewEdit() {
         <div class="alert alert-warning" role="alert">This is a preview</div>
         <h1 id="lessonTitle">${editTitle}</h1>
         <br>
-        <div id="lessonContent">${editContent}</div>
+        <div id="lessonContent"><script>lessonContent = \`${editContent}\`</script></div>
         <br>
         <button class="btn btn-success" onclick="submitEdit();">Submit</button>
         <button class="btn btn-primary" onclick="startEdit();">Edit</button>

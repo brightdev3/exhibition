@@ -1,8 +1,7 @@
 <div id="lesson">
     <h1 id="lessonTitle">{{lesson.title}}</h1>
     <br>
-    <br>
-    <div id="lessonContent">{{{lesson.content}}}</div>
+    <div id="lessonContent"><script>let lessonContent = `{{{lesson.content}}}`</script></div>
     <br>
     {{#if admin}}
     <br>

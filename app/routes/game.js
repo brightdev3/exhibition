@@ -28,7 +28,8 @@ router.get("/:token", async (req, res, next) => {
     req.dynamic.data = {
         ...req.dynamic.data,
         host: games_host.rows[0].host == req.user,
-        users: users.rows
+        users: users.rows,
+        token: token
     };
     req.dynamic.path = "game";
     return next();
