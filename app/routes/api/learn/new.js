@@ -1,11 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-const cookieParser = require("cookie-parser");
-
-
-router.use(cookieParser(process.env.COOKIE_SECRET));
-
 router.post("/", async (req, res) => {
     if (!req.dynamic.data.admin) {
         return res.status(403).json({

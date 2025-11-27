@@ -12,9 +12,7 @@
     <label for="lessonContent" class="form-label">Content</label>
     <textarea class="form-control" id="lessonContent" name="content" rows="10" required></textarea>
 </div>
-{{#if admin}}
 <button onclick="newlesson();" class="btn btn-primary">Create Lesson</button>
 <br><br>
 <div id="alertText" class="alert" role="alert" style="display: none;"></div>
 <script src="/scripts/learn/new.js"></script>
-{{/if}}

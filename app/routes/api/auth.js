@@ -1,11 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-const cookieParser = require("cookie-parser");
-const bcrypt = require("bcrypt");
-
-router.use(cookieParser(process.env.COOKIE_SECRET));
-
 router.post("/signup", async (req, res) => {
     try {
         const { username, email, password, password_repeat, name} = req.body;
@@ -51,8 +46,8 @@ router.post("/signup", async (req, res) => {
             });
         }
         await req.app.locals.pool.query(
-            `INSERT INTO users (username, password, name, email, assets)
-            VALUES ($1, $2, $3, $4, $5)`, [username, password, name, email, {"gold":0,"money":0,"SCC":1000}]
+            `INSERT INTO users (username, password, name, email, assets, curr_question)
+            VALUES ($1, $2, $3, $4, $5, $6)`, [username, password, name, email, {"gold":0,"money":0,"SCC":1000}, "k2mo7j"]
         );
         /*
         await req.app.locals.pool.query(
@@ -70,6 +65,7 @@ router.post("/signup", async (req, res) => {
             message: "account registered"
         });
     } catch (err) {
+        console.error(err);
         return res.status(500).json({
             success: false,
             message: "internal server error"

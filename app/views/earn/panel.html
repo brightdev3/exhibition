@@ -1,0 +1,41 @@
+<h3>Currencies</h3>
+<select id="currency" class="form-select" style="width:300px;">
+    {{#each currencies}}
+    <option value="{{this.code}}">{{this.name}}</option>
+    {{/each}}
+</select>
+<br>
+<div id="currencyDiv">
+    <form id="currencySet">
+        <label for="earn_min">Minimum earn:</label>
+        <input class="form-control" id="earn_min" type="number">
+        <label for="earn_max">Maximum earn:</label>
+        <input class="form-control" id="earn_max" type="number">
+        <br>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+</div>
+<br><br>
+<h3>Questions</h3>
+<table class="table table-hover" style="table-layout: fixed; width: 100%;">
+    <thead>
+        <tr>
+            <th style=" white-space: nowrap;">Code</th>
+            <th>Content</th>
+            <th style=" white-space: nowrap;">Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each questions}}
+        <tr onclick="window.location.href='/earn/panel/question/{{this.code}}';" style="cursor: pointer;">
+            <td>{{this.code}}</td>
+            <td style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{this.content}}</td>
+            <td>{{this.type}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<button class="btn btn-primary" onclick="window.location.href='/earn/panel/new';">New question</button>
+<br><br>
+<div id="alertText" class="alert" role="alert" style="display: none;"></div>
+<script src="/scripts/earn/panel.js"></script>

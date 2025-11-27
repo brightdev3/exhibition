@@ -1,0 +1,33 @@
+<p id="questionCode" style="display:none;">{{question.code}}</p>
+<b>Content</b>
+<textarea id="questionContent" class="form-control" rows="4">{{question.content}}</textarea>
+<br>
+{{#if isMultipleChoice}}
+<b>Choices</b>
+<textarea id="questionChoices" class="form-control" rows="4">{{#each question.choices}}{{this}}&#10;{{/each}}</textarea>
+<script>document.getElementById("questionChoices").value = document.getElementById("questionChoices").value.slice(0, -1);</script>
+<br>
+{{/if}}
+<b>Answers {{#if isMultipleChoice}}(0 for "A", 1 for "B"...){{/if}}</b>
+<textarea id="questionAnswers" class="form-control">{{question.answers}}</textarea>
+<br>
+<h3>Type</h3>
+<p>{{question.type}}</p>
+<button class="btn btn-primary" onclick="submitEdit()">Submit</button>
+<br><br>
+<div id="alertText" class="alert" role="alert" style="display: none;"></div>
+<script>
+async function submitEdit() {
+    let data = {
+        "code": document.getElementById("questionCode").innerHTML,
+        "content": document.getElementById("questionContent").value,
+        "choices": document.getElementById("questionChoices") ? document.getElementById("questionChoices").value : null,
+        "answers": document.getElementById("questionAnswers").value
+    };
+    await request("/api/earn/edit", data, () => {
+        setTimeout(() => {
+            window.location.href = "/earn/panel/question/" + data.code + "/edit";
+        }, 500);
+    });
+}
+</script>

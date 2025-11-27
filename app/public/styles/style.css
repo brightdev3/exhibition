@@ -48,11 +48,19 @@ body {
     overflow-x: auto;
 }
 
+/*
 table, th, td {
-  border:1px solid black;
+    border: 1px solid black;
 }
 
 th, td {
-  padding: 10px;
-  text-align: left;
+    padding: 10px;
+    text-align: left;
+}
+    */
+
+.question-content-panel {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

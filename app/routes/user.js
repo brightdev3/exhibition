@@ -1,12 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-const fs = require("fs");
-const path = require("path")
-
-const cookieParser = require("cookie-parser");
-router.use(cookieParser(process.env.COOKIE_SECRET));
-
 router.use("/{:username}", async(req, res, next) => {
     if (req.method != "GET") {
         return next();
@@ -34,6 +28,7 @@ router.use("/{:username}", async(req, res, next) => {
         req.dynamic.path = "user";
         return next();
     } catch (err) {
+        console.error(err);
         return res.status(500).render("files/errors/500");
     }
 });

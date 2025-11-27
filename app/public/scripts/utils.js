@@ -1,5 +1,5 @@
-function alertText(text, type = "info") {
-    const alertNode = document.getElementById("alertText");
+function alertText(text, type = "info", elementId = "alertText") {
+    const alertNode = document.getElementById(elementId);
     if (!alertNode) {
         return;
     }
@@ -39,3 +39,18 @@ async function request(path, data, callback) {
         return false;
     }
 }
+
+function refreshDarkMode() {
+    let dark = document.getElementById("color-theme").checked;
+    document.documentElement.setAttribute("data-bs-theme", dark ? "dark" : "light");
+    document.querySelector('nav').classList.remove("navbar-light", "bg-light", "navbar-dark", "bg-dark");
+    document.querySelector('nav').classList.add(dark ? "bg-dark" : "bg-light", dark ? "navbar-dark" : "navbar-light");
+    localStorage.setItem("color-theme", dark);
+}
+
+document.getElementById("color-theme").addEventListener("change", () => {
+    refreshDarkMode();
+});
+
+document.getElementById("color-theme").checked = localStorage.getItem("color-theme") == "true";
+refreshDarkMode();

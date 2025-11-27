@@ -1,7 +1,6 @@
 const express = require("express");
 const { engine } = require("express-handlebars");
 const pg = require("pg");
-const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
@@ -33,6 +32,8 @@ const pool = new pg.Pool({
     }
 });
 
+/*
+
 const kv = createClient({
     url: process.env.KV_REST_API_URL,
     token: process.env.KV_REST_API_TOKEN,
@@ -48,9 +49,15 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+*/
+
 app.locals.pool = pool;
+
+/*
 app.locals.kv = kv;
 app.locals.transporter = transporter;
+*/
+
 app.locals.baseDir = __dirname;
 
 const routes = require("./routes");

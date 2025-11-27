@@ -1,0 +1,13 @@
+<b>Code</b>
+<p>{{question.code}}</p>
+<b>Content</b>
+<p>{{{question.content}}}</p>
+{{#if isMultipleChoice}}
+<b>Choices</b>
+<p>{{{question.choices}}}</p>
+{{/if}}
+<b>Answers {{#if isMultipleChoice}}(0 for "A", 1 for "B"...){{/if}}</b>
+<p>{{{question.answers}}}</p>
+<b>Type</b>
+<p>{{question.type}}</p>
+<button onclick="window.location.href='/earn/panel/question/{{question.code}}/edit'" class="btn btn-primary">Edit</button>

@@ -1,12 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const bcrypt = require("bcrypt");
-
-router.use(cookieParser(process.env.COOKIE_SECRET));
-
 router.get("/:token", async (req, res, next) => {
     const token = req.params.token;
     const links = await req.app.locals.pool.query(

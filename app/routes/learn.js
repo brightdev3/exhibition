@@ -1,12 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-const fs = require("fs");
-const path = require("path")
-
-const cookieParser = require("cookie-parser");
-router.use(cookieParser(process.env.COOKIE_SECRET));
-
 router.use(async(req, res, next) => {
     if (req.method != "GET") {
         return next();

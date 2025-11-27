@@ -1,11 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-const cookieParser = require("cookie-parser");
-const bcrypt = require("bcrypt");
-
-router.use(cookieParser(process.env.COOKIE_SECRET));
-
 router.post("/new", async (req, res) => {
     if (!req.user) {
         return res.status(401).json({
@@ -123,7 +118,6 @@ router.post("/leave", async (req, res) => {
             message: isHost ? "deleted game" : "left game"
         });
     } catch (err) {
-        console.log(err)
         return res.status(500).json({
             success: false,
             message: "internal server error",

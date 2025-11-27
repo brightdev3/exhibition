@@ -1,0 +1,33 @@
+<p>Mine which of the following:</p>
+<select id="currencySelect" class="form-select" style="width:150px;">
+    <option value="scc" selected>SCC</option>
+    <option value="gold">gold</option>
+</select>
+<br>
+<p>Question</p>
+<p style="display:none;" id="questionType">{{question.type}}</p>
+<p>{{{question.content}}}</p>
+<form id="questionForm">
+    <fieldset id="questionFieldset">
+        {{#if isText}}
+            <input type="text" class="form-control" id="answerInput">
+        {{else if isNumber}}
+            <input type="number" class="form-control" id="answerInput" step="any">
+        {{else if isMultipleChoice}}
+            {{#each question.choices}}
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="answerOptions" id="option{{@index}}" value="{{@index}}">
+                    <label class="form-check-label" for="option{{@index}}">
+                        {{this}}
+                    </label>
+                </div>
+            {{/each}}
+        {{/if}}
+    </fieldset>
+    <br>
+    <button class="btn btn-primary" id="submitButton">Submit</button>
+</form>
+<div id="resultText" class="alert" role="alert" style="display: none;"></div>
+<p id="earnText" style="display:none;"></p>
+<button id="nextQuestionButton" class="btn btn-primary" style="display: none;" onclick="window.location.reload()">Next</button>
+<script src="/scripts/earn/play.js"></script>

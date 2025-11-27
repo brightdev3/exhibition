@@ -1,0 +1,34 @@
+<h1>New question</h1>
+<br>
+<p>Type of question</p>
+<select id="questionType" class="form-select" style="width:300px;">
+    <option value="text" selected>Text</option>
+    <option value="number">Number</option>
+    <option value="multiple_choice">Multiple choice</option>
+</select>
+<br>
+<div class="mb-3" id="questionDiv">
+    <label for="questionContent" class="form-label">Content</label>
+    <textarea class="form-control" id="questionContent" name="content" rows="4" required></textarea>
+</div>
+<div class="mb-3" id="choicesDiv" style="display: none;">
+    <label for="questionChoices" class="form-label">Choices (one per line)</label>
+    <textarea class="form-control" id="questionChoices" name="choices" rows="4"></textarea>
+</div>
+<div class="mb-3" id="answersDiv">
+    <label for="questionAnswers" class="form-label">Answers (one per line)</label>
+    <textarea class="form-control" id="questionAnswers" name="answers" rows="2"></textarea>
+</div>
+<button onclick="newQuestion();" class="btn btn-primary">Create Question</button>
+<br><br>
+<div id="alertText" class="alert" role="alert" style="display: none;"></div>
+<script src="/scripts/earn/new.js"></script>
+<script>
+document.getElementById("questionType").addEventListener("change", () => {
+    if (document.getElementById("questionType").value == "multiple_choice") {
+        document.getElementById("choicesDiv").style.display = "block";
+    } else {
+        document.getElementById("choicesDiv").style.display = "none";
+    }
+});
+</script>
