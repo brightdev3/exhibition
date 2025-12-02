@@ -1,7 +1,7 @@
 <p>I've paused progress on this section of the website as I am now focusing on adding the more basic features.</p>
 <div id="cards" style="display: flex; flex-wrap: wrap;">
     {{#each games}}
-        <div class="card card-item row">
+        <div class="card card-item row" style="width:250px;">
             <p>Host: {{this.host}}</p>
             <p>Open: {{this.open}}</p>
             {{#if this.open}}
@@ -61,7 +61,6 @@
 </button>
 <br>
 <br>
-<div id="alertText" class="alert" role="alert" style="display: none;"></div>
 <script src="/scripts/newgame.js"></script>
 <script src="/scripts/joingame.js"></script>
 <script>

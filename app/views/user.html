@@ -4,7 +4,7 @@
 <div id="cards" style="display: flex; flex-wrap: wrap;">
     {{#each assets}}
     <div class="card" style="width: 150px; padding: 10px; margin: 10px;">
-        <img src="/assets/favicon.png" class="card-img-top" alt="currency">
+        <img src="/assets/currencies/{{lookup this 0}}.png" class="card-img-top" alt="currency">
         <div class="card-body">
             <h5 class="card-title">{{lookup this 0}}</h5>
             <p class="card-text">{{lookup this 1}}</p>
@@ -24,5 +24,4 @@
 <br>
 <br>
 {{/if}}
-<div id="alertText" class="alert" role="alert" style="display: none;"></div>
 <script src="/scripts/signout.js"></script>

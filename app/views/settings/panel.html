@@ -1,0 +1,41 @@
+<table class="table table-hover" style="table-layout: fixed; width: 100%;">
+    <thead>
+        <tr>
+            <th style="white-space: nowrap;">Code</th>
+            <th style="white-space: nowrap;">Asset</th>
+            <th style="white-space: nowrap;">Amount</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each promos}}
+        <tr>
+            <td>{{this.code}}</td>
+            <td>{{this.asset}}</td>
+            <td>{{this.amount}}</td>
+            <td><button onclick="deletePromos(['{{this.code}}'])" class="btn btn-danger btn-sm">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<br><br>
+<h3>New promos</h3>
+<br>
+<form id="promoForm">
+    <select id="promoCurrency" class="form-select" style="width:150px;">
+        <option value="gold" selected>GOLD</option>
+        <option value="scc">SCC</option>
+        <option value="spc">SPC</option>
+    </select>
+    <br>
+    <label for="">Amount:</label>
+    <input id="promoAmount" type="number" class="form-control">
+    <br>
+    <label for="">Quantity:</label>
+    <input id="promoQuantity" type="number" class="form-control">
+    <br>
+    <button class="btn btn-primary">Submit</button>
+</form>
+<br>
+<br>
+<script src="/scripts/panel.js"></script>

@@ -1,21 +1,30 @@
-function alertText(text, type = "info", elementId = "alertText") {
-    const alertNode = document.getElementById(elementId);
-    if (!alertNode) {
-        return;
+function alertText(text, type = "primary") {
+    let alertContainer = document.getElementById("toast-container");
+    let code = "";
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < 6; i++) {
+        code += characters[Math.floor(Math.random() * characters.length)];
     }
-    alertNode.classList.forEach(className => {
-        if (className.startsWith("alert-")) {
-            alertNode.classList.remove(className);
-        }
+    alertContainer.insertAdjacentHTML("beforeend", `
+        <div id="toast-${code}" class="toast align-items-center text-bg-${type} border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body">
+                    ${text}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    `);
+    const toast = new bootstrap.Toast(document.getElementById("toast-" + code), {
+        autohide: true,
+        delay: 4000
     });
-    alertNode.classList.add("alert-" + type);
-    alertNode.innerHTML = text;
-    alertNode.style.display = "block";
+    toast.show();
 }
 
-async function request(path, data, callback) {
+async function request(path, data, callback, alert = true) {
     try {
-        alertText("Sending...", "primary");
+        // alertText("Sending...", "primary");
         const response = await fetch(path, {
             method: "POST",
             headers: {
@@ -28,29 +37,21 @@ async function request(path, data, callback) {
             if (callback) {
                 callback(responseData);
             }
-            alertText(responseData.message ? "Success: " + responseData.message : "Success!", "success");
+            if (alert) {
+                alertText(responseData.message ? "Success: " + responseData.message : "Success!", "success");
+            }
             return true;
         } else {
-            alertText(responseData.message ? "Error: " + responseData.message : "Error!", "warning");
+            if (alert) {
+                alertText(responseData.message ? "Error: " + responseData.message : "Error!", "warning");
+            }
             return false;
         }
     } catch (error) {
-        alertText("Error: an unexpected error occurred", "warning");
+        console.error(error);
+        if (alert) {
+            alertText("Error: an unexpected error occurred", "warning");
+        }
         return false;
     }
 }
-
-function refreshDarkMode() {
-    let dark = document.getElementById("color-theme").checked;
-    document.documentElement.setAttribute("data-bs-theme", dark ? "dark" : "light");
-    document.querySelector('nav').classList.remove("navbar-light", "bg-light", "navbar-dark", "bg-dark");
-    document.querySelector('nav').classList.add(dark ? "bg-dark" : "bg-light", dark ? "navbar-dark" : "navbar-light");
-    localStorage.setItem("color-theme", dark);
-}
-
-document.getElementById("color-theme").addEventListener("change", () => {
-    refreshDarkMode();
-});
-
-document.getElementById("color-theme").checked = localStorage.getItem("color-theme") == "true";
-refreshDarkMode();

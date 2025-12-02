@@ -1,18 +1,21 @@
-<ul class="nav flex-column">
-    <h4 class="mb-4">Lessons</h4>
-    {{#each lessons}}
-        <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/learn/lesson/{{this.code}}">{{this.title}}</a>
-        </li>
-    {{/each}}
-    <br>
-    <h4 class="mb-4">Practice</h4>
-    <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="/learn/practice/maths">Maths element</a>
-        <a class="nav-link" aria-current="page" href="/learn/practice/maths">Science element</a>
-    </li>
-    <br>
-    {{#if admin}}
-    <button class="btn btn-primary" onclick="window.location.href='/learn/lessons/new'">New</button>
-    {{/if}}
-</ul>
+<nav class="navbar navbar-expand-md">
+    <div class="container-fluid flex-column">
+        <h2 class="learn-label">Lessons</h2>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#learnNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="learnNav">
+            <ul class="nav navbar-nav flex-column">
+                {{#each lessons}}
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/learn/lesson/{{this.code}}">{{this.title}}</a>
+                </li>
+                {{/each}}
+                <br>
+                {{#if admin}}
+                <button class="btn btn-primary" style="display:block;" onclick="window.location.href='/learn/lessons/new'">New</button>
+                {{/if}}
+            </ul>
+        </div>
+    </div>
+</nav>

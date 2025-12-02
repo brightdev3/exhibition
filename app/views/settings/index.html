@@ -1,0 +1,17 @@
+<h3>Redeem</h3>
+<br>
+<p>You may have got a redeem code from our or our sponsors' displays. Use them here!</p>
+<form id="promoRedeem">
+    <input id="promoCode" type="text" class="form-control">
+    <br>
+    <button class="btn btn-primary">Submit</button>
+</form>
+<br><br>
+{{#if admin}}
+<h3>Admin</h3>
+<br>
+<button class="btn btn-primary" onclick="window.location.href='/settings/panel'">Admin panel</button>
+<br><br>
+{{/if}}
+<br>
+<script src="/scripts/settings.js"></script>

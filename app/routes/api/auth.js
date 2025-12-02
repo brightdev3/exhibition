@@ -47,19 +47,9 @@ router.post("/signup", async (req, res) => {
         }
         await req.app.locals.pool.query(
             `INSERT INTO users (username, password, name, email, assets, curr_question)
-            VALUES ($1, $2, $3, $4, $5, $6)`, [username, password, name, email, {"gold":0,"money":0,"SCC":1000}, "k2mo7j"]
+            VALUES ($1, $2, $3, $4, $5, $6)`,
+            [username, password, name, email, {"gold":0,"money":0,"scc":0,"spc": 0}, "k2mo7j"]
         );
-        /*
-        await req.app.locals.pool.query(
-            `UPDATE users SET assets = jsonb_set(
-                assets,
-                '{SCC}',
-                1000,
-                true
-            )
-            WHERE username = $1;`, [username]
-        );
-        */
         return res.status(201).json({
             success: true,
             message: "account registered"

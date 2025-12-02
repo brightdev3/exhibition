@@ -1,11 +1,9 @@
 async function getCurrency(code) {
-    console.log(code)
     try {
         const response = await fetch("/api/earn/currency?code=" + code, {
             method: "GET"
         });
         const responseData = await response.json();
-        console.log(responseData);
         if (responseData.success) {
             const currency = responseData.data;
             document.getElementById("earn_min").value = currency.earn_min;

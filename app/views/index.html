@@ -1,2 +1,41 @@
 <p>Welcome to our exhibition!</p>
+<br>
+<div id="cards" style="display: flex; flex-wrap: wrap;">
+    <a class="card btn home-card" href="/learn">
+        <i class="card-img-top bi bi-book glowing-text"></i>
+        <div class="card-body">
+        <h4 class="card-title glowing-text">Learn</h4>
+        </div>
+    </a>
+    <a class="card btn home-card" href="/earn">
+        <i class="card-img-top bi bi-cash-coin glowing-text"></i>
+        <div class="card-body">
+        <h4 class="card-title glowing-text">Earn</h4>
+        </div>
+    </a>
+    <a class="card btn home-card" href="/games">
+        <i class="card-img-top bi bi-controller glowing-text"></i>
+        <div class="card-body">
+        <h4 class="card-title glowing-text">Games</h4>
+        </div>
+    </a>
+    <a class="card btn home-card" href="/about">
+        <i class="card-img-top bi bi-info-circle glowing-text"></i>
+        <div class="card-body">
+        <h4 class="card-title glowing-text">About</h4>
+        </div>
+    </a>
+</div>
+<br>
 <p>Check out our Github repository: <a href="https://github.com/brightdev3/exhibition">https://github.com/brightdev3/exhibition</a></p>
+<script>
+    let cards = document.getElementsByClassName("card");
+    for (let element of cards) {
+        element.addEventListener('mouseenter', () => {
+            element.classList.add("shadow");
+        });
+        element.addEventListener('mouseleave', () => {
+            element.classList.remove("shadow");
+        });
+    }
+</script>

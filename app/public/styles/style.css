@@ -40,6 +40,7 @@ body {
     border-right: 1px solid #ddd;
     width: 250px;
     overflow-x: auto;
+    padding: 0px;
 }
 
 .learn-content {
@@ -48,19 +49,85 @@ body {
     overflow-x: auto;
 }
 
-/*
-table, th, td {
-    border: 1px solid black;
+.learn-label {
+    display: block;
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
+@media screen and (max-width: 768px) {
+    .learn-nav {
+        border-right: none;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .learn-label {
+        display: inline;
+    }
 }
-    */
 
 .question-content-panel {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+:root {
+    --money: rgb(226,182,20);
+    --money-o: rgb(226,182,20,0.5);
+}
+
+.card {
+    margin: 5px;
+    width: 200px;
+    padding: 10px 20px 10px 20px;
+    background-color: rgba(255, 200, 0, 0.4);
+    border: 5px solid var(--money);
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+    transition-property: transform, background-color, border-color, color;
+    container-type: inline-size;
+}
+
+.card:hover {
+    background-color: rgb(255, 255, 0, 0.75);
+    border-color: rgba(255, 200, 0, 0.4);
+    color:black;
+    transform: translateY(-10px);
+}
+
+.card-img-top {
+    font-size: 100cqw;
+    display: block;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+}
+
+.home-card i {
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+}
+
+.home-card h4 {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    font-weight: bold;
+}
+
+[data-bs-theme="dark"] {
+    --bs-box-shadow: 0 0.5rem 1rem rgba(255, 200, 67, 0.3);
+}
+
+.glowing-text {
+    color: var(--money);
+    animation: hueRotate 3s linear infinite;
+}
+
+@keyframes hueRotate {
+    0% {
+        filter: hue-rotate(0deg) saturate(1.5) brightness(1.2);
+    }
+    100% {
+        filter: hue-rotate(360deg) saturate(1.5) brightness(1.2);
+    }
 }

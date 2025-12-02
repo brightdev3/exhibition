@@ -12,17 +12,16 @@ document.getElementById("questionForm").addEventListener("submit", async (event)
     window.sessionStorage.setItem("currency", data.currency);
     await request("/api/earn/submit", data, (responseData) => {
         if (responseData.correct) {
-            alertText("Correct answer!", "success", "resultText");
+            alertText("Correct answer!", "success");
             document.getElementById("earnText").style.display = "block";
-            document.getElementById("earnText").innerHTML = `You earned ${responseData.earn} ${data.currency.toUpperCase()}!`;
+            document.getElementById("earnText").innerHTML = `You earned ${responseData.earn} ${data.currency.toUpperCase()}! 🎉`;
         } else {
-            alertText("Incorrect answer.", "danger", "resultText");
+            alertText("Incorrect answer.", "danger");
         }
-        document.getElementById("option")
         document.getElementById("questionFieldset").disabled = true;
         document.getElementById("submitButton").style.display = "none";
         document.getElementById("nextQuestionButton").style.display = "block";
-    });
+    }, false);
 });
 
 if (window.sessionStorage.getItem("currency")) {
