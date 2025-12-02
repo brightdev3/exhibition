@@ -9,7 +9,8 @@
 <br>
 {{/if}}
 <b>Answers {{#if isMultipleChoice}}(0 for "A", 1 for "B"...){{/if}}</b>
-<textarea id="questionAnswers" class="form-control">{{question.answers}}</textarea>
+<textarea id="questionAnswers" class="form-control">{{#each question.answers}}{{this}}&#10;{{/each}}</textarea>
+<script>document.getElementById("questionAnswers").value = document.getElementById("questionAnswers").value.slice(0, -1);</script>
 <br>
 <h3>Type</h3>
 <p>{{question.type}}</p>

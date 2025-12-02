@@ -39,12 +39,14 @@ router.use("/api/auth", require("./api/auth"));
 router.use("/api/games", require("./api/games"));
 router.use("/api/learn/lesson", require("./api/learn/lesson"));
 router.use("/api/earn", require("./api/earn"));
+router.use("/api/settings", require("./api/settings"));
 router.use("/earn", require("./earn"));
 router.use("/game", require("./game"));
 router.use("/games", require("./games"));
 router.use("/user", require("./user"));
 router.use("/learn", require("./learn"));
 router.use("/earn", require("./earn"));
+router.use("/settings", require("./settings"));
 
 router.get(/^\/(?:files|layouts|partials)/, (req, res) => {
     return res.status(403).render("files/errors/403", {user: req.user});

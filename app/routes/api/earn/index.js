@@ -140,7 +140,7 @@ router.post("/edit", async (req, res) => {
     let { code, content, choices, answers } = req.body;
     await req.app.locals.pool.query(
         `UPDATE questions SET content = $2, choices = $3, answers = $4 WHERE code = $1`,
-        [code, content, choices.split("\n"), answers.split("\n")]
+        [code, content, choices && choices != "" ? choices.split("\n") : null, answers.split("\n")]
     );
     return res.status(201).json({
         success: true,
