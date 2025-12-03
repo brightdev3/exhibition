@@ -4,6 +4,7 @@ document.getElementById("promoForm").addEventListener("submit", async (event) =>
         "currency": document.getElementById("promoCurrency").value,
         "amount": document.getElementById("promoAmount").value,
         "quantity": document.getElementById("promoQuantity").value,
+        "notes": document.getElementById("promoNotes").value
     };
     await request("/api/settings/panel/promo/new", data, () => {
         setTimeout(() => {

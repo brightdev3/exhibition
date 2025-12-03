@@ -4,6 +4,7 @@
             <th style="white-space: nowrap;">Code</th>
             <th style="white-space: nowrap;">Asset</th>
             <th style="white-space: nowrap;">Amount</th>
+            <th style="white-space: nowrap;">Notes</th>
             <th></th>
         </tr>
     </thead>
@@ -13,6 +14,7 @@
             <td>{{this.code}}</td>
             <td>{{this.asset}}</td>
             <td>{{this.amount}}</td>
+            <td>{{this.notes}}</td>
             <td><button onclick="deletePromos(['{{this.code}}'])" class="btn btn-danger btn-sm">Delete</button></td>
         </tr>
         {{/each}}
@@ -29,10 +31,13 @@
     </select>
     <br>
     <label for="">Amount:</label>
-    <input id="promoAmount" type="number" class="form-control">
+    <input id="promoAmount" type="number" class="form-control" required>
     <br>
-    <label for="">Quantity:</label>
-    <input id="promoQuantity" type="number" class="form-control">
+    <label for="">Number of promo codes:</label>
+    <input id="promoQuantity" type="number" class="form-control" value="1" required>
+    <br>
+    <label for="">Notes (optional):</label>
+    <input id="promoNotes" type="text" class="form-control">
     <br>
     <button class="btn btn-primary">Submit</button>
 </form>

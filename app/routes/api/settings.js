@@ -6,7 +6,8 @@ router.post("/promo/redeem", async (req, res) => {
         return res.status(401).render("files/errors/401", {"user": req.user});
     }
     try {
-        const { code } = req.body;
+        let { code } = req.body;
+        code = code.toLowerCase();
         let promo = await req.app.locals.pool.query(
             `SELECT * FROM promos WHERE code = $1`,
             [code]
@@ -54,7 +55,7 @@ router.post("/panel/promo/new", async (req, res) => {
         });
     }
     try {
-        const { currency, amount, quantity} = req.body;
+        const { currency, amount, quantity, notes } = req.body;
         for (let i = 0; i < quantity; i++) {
             let code = "";
             const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -62,8 +63,8 @@ router.post("/panel/promo/new", async (req, res) => {
                 code += characters[Math.floor(Math.random() * characters.length)];
             }
             await req.app.locals.pool.query(
-                `INSERT INTO promos (code, asset, amount) VALUES ($1, $2, $3)`,
-                [code, currency, amount]
+                `INSERT INTO promos (code, asset, amount, notes) VALUES ($1, $2, $3, $4)`,
+                [code, currency, amount, notes]
             );
         }
         return res.status(201).json({
