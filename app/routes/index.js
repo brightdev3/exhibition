@@ -47,6 +47,7 @@ router.use("/user", require("./user"));
 router.use("/learn", require("./learn"));
 router.use("/earn", require("./earn"));
 router.use("/settings", require("./settings"));
+router.use("/market", require("./market"));
 
 router.get(/^\/(?:files|layouts|partials)/, (req, res) => {
     return res.status(403).render("files/errors/403", {user: req.user});

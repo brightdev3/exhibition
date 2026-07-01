@@ -1,0 +1,29 @@
+<h3>Welcome to the market!</h3>
+<br>
+<p>
+    Market does not work yet; <b>coming soon!</b> It will include the following key features, which are subject to variation:
+    <ul>
+        <li>Users can buy packets at a set price.</li>
+        <li>Users can open packets to gain assets, with probabilities varying for different packet types (special collectibles may be added in addition to the currencies).</li>
+        <li>If the probabilities of a packet are changed, it will also apply to any unopened ones purchased earlier, effectively increasing or decreasing its value.</li>
+        <li>If we add trading, then the prices may not be set; rather, it will be the last transaction or an average of transations, simulating a global floating point market.</li>
+    </ul>
+</p>
+<br>
+<h4>Your packets:</h4>
+<br>
+<div id="cards" style="display: flex; flex-wrap: wrap;">
+    {{#each packets}}
+    <div class="card" style="width: 225px; padding: 10px; margin: 10px;">
+        <div class="card-body">
+            <h5 class="card-title">{{lookup this 0}}</h5>
+            <p class="card-text">{{lookup this 1}}</p>
+            <div style="display: inline flex; flex-wrap: wrap; gap: 5px;">
+                <button class="btn btn-primary btn-sm">Buy</button>
+                <button class="btn btn-success btn-sm">Use</button>
+                <button class="btn btn-info btn-sm">Details</button>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
